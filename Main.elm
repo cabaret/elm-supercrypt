@@ -77,7 +77,7 @@ mapCharToCode char =
             String.fromChar char
 
 
-headerView : Html Msg
+headerView : Html msg
 headerView =
     div [ class "row" ]
         [ nav
@@ -101,7 +101,7 @@ headerView =
         ]
 
 
-iconView : Icon -> Html Msg
+iconView : Icon -> Html msg
 iconView icon =
     div
         [ class "small-12 medium-4 large-4 columns text-center"
@@ -117,7 +117,7 @@ iconView icon =
         ]
 
 
-iconsView : Html Msg
+iconsView : Html msg
 iconsView =
     div [ class "row" ]
         (List.map iconView icons)
