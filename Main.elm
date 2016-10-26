@@ -54,7 +54,7 @@ getCodeFromValue =
 
 mapCharToCode : Char -> String
 mapCharToCode char =
-    case (Dict.get char charMap) of
+    case Dict.get char charMap of
         Just value ->
             value
 
