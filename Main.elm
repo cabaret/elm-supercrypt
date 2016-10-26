@@ -1,23 +1,22 @@
 module Main exposing (..)
 
+import Char
+import Dict exposing (Dict)
 import Html exposing (..)
+import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
-import Html.App as App
 import String
-import Dict exposing (Dict)
-import Char
 
 
 type alias Model =
-    { inputValue : String
-    , code : String
+    { inputValue : Maybe String
     }
 
 
 initialModel : Model
 initialModel =
-    Model "" ""
+    Model Nothing
 
 
 charMap : Dict Char String
@@ -33,20 +32,6 @@ type alias Icon =
     }
 
 
-icons : List Icon
-icons =
-    [ { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/dots.png"
-      , text = "1. Enter a fun message to your kids below."
-      }
-    , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/hash_bourgondy.png"
-      , text = "2. Magic! It gets encoded with a super secret key."
-      }
-    , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/questionmark_orange.png"
-      , text = "3. Let your kids guess the code - how fast can they figure out the message?"
-      }
-    ]
-
-
 type Msg
     = Input String
 
@@ -55,33 +40,29 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         Input val ->
-            { model
-                | inputValue = val
-                , code = getCodeFromValue val
-            }
+            { model | inputValue = Just val }
 
 
 getCodeFromValue : String -> String
-getCodeFromValue text =
-    text
-        |> String.toLower
-        |> String.toList
-        |> List.map mapCharToCode
-        |> List.intersperse "-"
-        |> String.join ""
+getCodeFromValue =
+    String.toLower
+        >> String.toList
+        >> List.map mapCharToCode
+        >> List.intersperse "-"
+        >> String.concat
 
 
 mapCharToCode : Char -> String
-mapCharToCode str =
-    case (Dict.get str charMap) of
+mapCharToCode char =
+    case Dict.get char charMap of
         Just value ->
             value
 
         Nothing ->
-            String.fromChar str
+            String.fromChar char
 
 
-headerView : Html Msg
+headerView : Html msg
 headerView =
     div [ class "row" ]
         [ nav
@@ -105,11 +86,11 @@ headerView =
         ]
 
 
-iconView : Icon -> Html Msg
+iconView : Icon -> Html msg
 iconView icon =
     div
         [ class "small-12 medium-4 large-4 columns text-center"
-        , attribute "style" "height: 320px;"
+        , style [ ( "height", "320px" ) ]
         ]
         [ img
             [ class "smallicon"
@@ -121,11 +102,21 @@ iconView icon =
         ]
 
 
-iconsView : Html Msg
+iconsView : Html msg
 iconsView =
-    div
-        [ class "row" ]
-        (List.map iconView icons)
+    div [ class "row" ]
+        (List.map iconView
+            [ { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/dots.png"
+              , text = "1. Enter a fun message to your kids below."
+              }
+            , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/hash_bourgondy.png"
+              , text = "2. Magic! It gets encoded with a super secret key."
+              }
+            , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/questionmark_orange.png"
+              , text = "3. Let your kids guess the code - how fast can they figure out the message?"
+              }
+            ]
+        )
 
 
 encoderView : Model -> Html Msg
@@ -134,7 +125,7 @@ encoderView model =
         [ div
             [ class "small-12 medium-5 large-5 columns my-panel with-arrow-left"
             ]
-            [ h2 [ class "text-center", attribute "style" "color:white" ]
+            [ h2 [ class "text-center", style [ ( "color", "white" ) ] ]
                 [ text "Just start typing:" ]
             , input
                 [ onInput Input
@@ -143,17 +134,21 @@ encoderView model =
                 ]
                 []
             ]
-        , div
-            [ class "small-12 medium-6 large-6 columns my-panel dotted"
-            , id "resultID"
-            , attribute "style" "height: inherit;"
-            ]
-            [ h2 [ class "text-center" ]
-                [ text "Here's the result:" ]
-            , p
-                []
-                [ text model.code ]
-            ]
+        , case model.inputValue of
+            Nothing ->
+                text ""
+
+            Just value ->
+                div
+                    [ class "small-12 medium-6 large-6 columns my-panel dotted"
+                    , id "resultID"
+                    , style [ ( "height", "inherit" ) ]
+                    ]
+                    [ h2 [ class "text-center" ]
+                        [ text "Here's the result:" ]
+                    , p []
+                        [ text <| getCodeFromValue value ]
+                    ]
         ]
 
 
@@ -161,8 +156,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ headerView
-        , div
-            [ class "page page-main" ]
+        , div [ class "page page-main" ]
             [ div [ class "view-container" ]
                 [ div [ class "row" ]
                     [ div [ class "small-12 medium-12 medium-centered columns" ]
