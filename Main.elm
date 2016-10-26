@@ -44,13 +44,12 @@ update msg model =
 
 
 getCodeFromValue : String -> String
-getCodeFromValue text =
-    text
-        |> String.toLower
-        |> String.toList
-        |> List.map mapCharToCode
-        |> List.intersperse "-"
-        |> String.concat
+getCodeFromValue =
+    String.toLower
+        >> String.toList
+        >> List.map mapCharToCode
+        >> List.intersperse "-"
+        >> String.concat
 
 
 mapCharToCode : Char -> String
