@@ -50,7 +50,7 @@ getCodeFromValue text =
         |> String.toList
         |> List.map mapCharToCode
         |> List.intersperse "-"
-        |> String.join ""
+        |> String.concat
 
 
 mapCharToCode : Char -> String
