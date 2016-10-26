@@ -105,7 +105,7 @@ iconView : Icon -> Html msg
 iconView icon =
     div
         [ class "small-12 medium-4 large-4 columns text-center"
-        , attribute "style" "height: 320px;"
+        , style [ ( "height", "320px" ) ]
         ]
         [ img
             [ class "smallicon"
@@ -129,7 +129,7 @@ encoderView model =
         [ div
             [ class "small-12 medium-5 large-5 columns my-panel with-arrow-left"
             ]
-            [ h2 [ class "text-center", attribute "style" "color:white" ]
+            [ h2 [ class "text-center", style [ ( "color", "white" ) ] ]
                 [ text "Just start typing:" ]
             , input
                 [ onInput Input
@@ -141,7 +141,7 @@ encoderView model =
         , div
             [ class "small-12 medium-6 large-6 columns my-panel dotted"
             , id "resultID"
-            , attribute "style" "height: inherit;"
+            , style [ ( "height", "inherit" ) ]
             ]
             [ h2 [ class "text-center" ]
                 [ text "Here's the result:" ]
