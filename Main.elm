@@ -11,13 +11,12 @@ import String
 
 type alias Model =
     { inputValue : String
-    , code : String
     }
 
 
 initialModel : Model
 initialModel =
-    Model "" ""
+    Model ""
 
 
 charMap : Dict Char String
@@ -55,10 +54,7 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         Input val ->
-            { model
-                | inputValue = val
-                , code = getCodeFromValue val
-            }
+            { model | inputValue = val }
 
 
 getCodeFromValue : String -> String
@@ -149,9 +145,8 @@ encoderView model =
             ]
             [ h2 [ class "text-center" ]
                 [ text "Here's the result:" ]
-            , p
-                []
-                [ text model.code ]
+            , p []
+                [ text <| getCodeFromValue model.inputValue ]
             ]
         ]
 
