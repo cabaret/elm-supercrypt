@@ -1,6 +1,6 @@
 ## supercrypt
 
-Elm implementation of my friend Kevin's [first application](www.kevindecock.be/apps/supercrypt/) :)
+Elm implementation of my friend Kevin's [first application](http://www.kevindecock.be/apps/supercrypt/) :)
 
 
 ```
