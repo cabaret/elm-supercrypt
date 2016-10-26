@@ -68,13 +68,13 @@ getCodeFromValue text =
 
 
 mapCharToCode : Char -> String
-mapCharToCode str =
-    case (Dict.get str charMap) of
+mapCharToCode char =
+    case (Dict.get char charMap) of
         Just value ->
             value
 
         Nothing ->
-            String.fromChar str
+            String.fromChar char
 
 
 headerView : Html Msg
