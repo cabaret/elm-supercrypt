@@ -32,20 +32,6 @@ type alias Icon =
     }
 
 
-icons : List Icon
-icons =
-    [ { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/dots.png"
-      , text = "1. Enter a fun message to your kids below."
-      }
-    , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/hash_bourgondy.png"
-      , text = "2. Magic! It gets encoded with a super secret key."
-      }
-    , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/questionmark_orange.png"
-      , text = "3. Let your kids guess the code - how fast can they figure out the message?"
-      }
-    ]
-
-
 type Msg
     = Input String
 
@@ -120,7 +106,18 @@ iconView icon =
 iconsView : Html msg
 iconsView =
     div [ class "row" ]
-        (List.map iconView icons)
+        (List.map iconView
+            [ { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/dots.png"
+              , text = "1. Enter a fun message to your kids below."
+              }
+            , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/hash_bourgondy.png"
+              , text = "2. Magic! It gets encoded with a super secret key."
+              }
+            , { url = "http://www.kevindecock.be/apps/supercrypt/img/icons/questionmark_orange.png"
+              , text = "3. Let your kids guess the code - how fast can they figure out the message?"
+              }
+            ]
+        )
 
 
 encoderView : Model -> Html Msg
