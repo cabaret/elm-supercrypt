@@ -10,13 +10,13 @@ import String
 
 
 type alias Model =
-    { inputValue : String
+    { inputValue : Maybe String
     }
 
 
 initialModel : Model
 initialModel =
-    Model ""
+    Model Nothing
 
 
 charMap : Dict Char String
@@ -40,7 +40,7 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         Input val ->
-            { model | inputValue = val }
+            { model | inputValue = Just val }
 
 
 getCodeFromValue : String -> String
@@ -134,16 +134,21 @@ encoderView model =
                 ]
                 []
             ]
-        , div
-            [ class "small-12 medium-6 large-6 columns my-panel dotted"
-            , id "resultID"
-            , style [ ( "height", "inherit" ) ]
-            ]
-            [ h2 [ class "text-center" ]
-                [ text "Here's the result:" ]
-            , p []
-                [ text <| getCodeFromValue model.inputValue ]
-            ]
+        , case model.inputValue of
+            Nothing ->
+                text ""
+
+            Just value ->
+                div
+                    [ class "small-12 medium-6 large-6 columns my-panel dotted"
+                    , id "resultID"
+                    , style [ ( "height", "inherit" ) ]
+                    ]
+                    [ h2 [ class "text-center" ]
+                        [ text "Here's the result:" ]
+                    , p []
+                        [ text <| getCodeFromValue value ]
+                    ]
         ]
 
 
