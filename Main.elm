@@ -1,12 +1,12 @@
 module Main exposing (..)
 
+import Char
+import Dict exposing (Dict)
 import Html exposing (..)
+import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
-import Html.App as App
 import String
-import Dict exposing (Dict)
-import Char
 
 
 type alias Model =
@@ -123,8 +123,7 @@ iconView icon =
 
 iconsView : Html Msg
 iconsView =
-    div
-        [ class "row" ]
+    div [ class "row" ]
         (List.map iconView icons)
 
 
@@ -161,8 +160,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ headerView
-        , div
-            [ class "page page-main" ]
+        , div [ class "page page-main" ]
             [ div [ class "view-container" ]
                 [ div [ class "row" ]
                     [ div [ class "small-12 medium-12 medium-centered columns" ]
